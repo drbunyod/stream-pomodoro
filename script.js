@@ -9,7 +9,7 @@ const lengths = {
 const breakSound = new Audio('sounds/break.mp3');
 const workSound = new Audio('sounds/work.mp3');
 
-let numberOfSessions = 1;
+let numberOfSessions = 0;
 
 let mode;
 let interval;
@@ -23,6 +23,10 @@ document.querySelector('#mode-buttons').addEventListener('click', function (even
   if (!newMode) return;
 
   mode = newMode;
+
+  if (mode === 'pomodoro') {
+    numberOfSessions += 1;
+  }
 
   document.querySelectorAll('button[data-mode]').forEach(e => e.classList.remove('active'));
   document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
@@ -83,7 +87,6 @@ function updateClock() {
     clearInterval(interval);
     interval = null;
     if (mode === 'pomodoro') {
-      numberOfSessions += 1;
       breakSound.play();
     } else {
       workSound.play();
